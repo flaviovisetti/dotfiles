@@ -169,6 +169,11 @@ create_syslink_for_tmux_conf() {
 }
 
 create_syslink_for_neovim_config() {
+  if [ ! -d "${HOME}/.config/nvim" ]; then
+    echo "Directory not found ~> .config/nvim | Creating directory..."
+    mkdir -p ${HOME}/.config/nvim
+  fi
+
   command ln -nfs ${DOTFILES_DEFAULT_PATH}/nvim ${HOME}/.config/nvim
 }
 
@@ -210,18 +215,32 @@ case "$(uname -s)" in
     ;;
   Darwin)
     echo "Running MacOS setup"
+
     create_syslink_for_bin
     install_homebrew
     install_macos_requirements
+
     download_and_install_custom_font
+
     make_zsh_as_default
     install_ohmyzsh
     install_zsh_plugins
     install_zsh_theme
     create_links_for_zsh_files
+
     create_syslink_for_tmux_conf
+    install_tpm_for_tmux
+
+    download_and_install_neovim
+    create_syslink_for_neovim_config
+
     download_and_install_asdf
     make_asdf_plugins_available
+
+    # install_node_version_by_asdf
+    # install_java_version_by_asdf
+    # install_clojure_version_by_asdf
+    # install_ruby_version_by_asdf
     ;;
   *)
     echo "Operational system not recognized, aborting setup"
