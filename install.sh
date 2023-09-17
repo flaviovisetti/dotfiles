@@ -109,6 +109,26 @@ make_asdf_plugins_available() {
   command ${HOME}/.asdf/bin/asdf plugin add nodejs
 }
 
+install_node_version_by_asdf() {
+  command ${HOME}/.asdf/bin/asdf install nodejs $NODEJS_VERSION_FOR_INSTALL
+  command ${HOME}/.asdf/bin/asdf global nodejs $NODEJS_VERSION_FOR_INSTALL
+}
+
+install_java_version_by_asdf() {
+  command ${HOME}/.asdf/bin/asdf install java $JAVA_VERSION_FOR_INSTALL
+  command ${HOME}/.asdf/bin/asdf global java $JAVA_VERSION_FOR_INSTALL
+}
+
+install_clojure_version_by_asdf() {
+  command ${HOME}/.asdf/bin/asdf install clojure $CLOJURE_VERSION_FOR_INSTALL
+  command ${HOME}/.asdf/bin/asdf global clojure $CLOJURE_VERSION_FOR_INSTALL
+}
+
+install_ruby_version_by_asdf() {
+  command ${HOME}/.asdf/bin/asdf install ruby $RUBY_VERSION_FOR_INSTALL
+  command ${HOME}/.asdf/bin/asdf global ruby $RUBY_VERSION_FOR_INSTALL
+}
+
 create_links_for_zsh_files() {
   command ln -nfs ${DOTFILES_DEFAULT_PATH}/zsh/zshrc ${HOME}/.zshrc
   command ln -nfs ${DOTFILES_DEFAULT_PATH}/zsh/zshenv ${HOME}/.zshenv
@@ -148,6 +168,10 @@ create_syslink_for_tmux_conf() {
   command ln -nfs ${DOTFILES_DEFAULT_PATH}/tmux/tmux.conf ${HOME}/.tmux.conf
 }
 
+create_syslink_for_neovim_config() {
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/nvim ${HOME}/.config/nvim
+}
+
 output_message() {
   command echo '################################################' 
   command echo "${GREEN_COLOR}==> $1 ${CLEAR_COLOR}"
@@ -162,7 +186,6 @@ case "$(uname -s)" in
     install_nala
     install_debian_requirements
 
-    download_and_install_neovim
     download_and_install_custom_font
 
     make_zsh_as_default
@@ -174,8 +197,16 @@ case "$(uname -s)" in
     create_syslink_for_tmux_conf
     install_tpm_for_tmux
 
+    download_and_install_neovim
+    create_syslink_for_neovim_config
+
     download_and_install_asdf
     make_asdf_plugins_available
+
+    # install_node_version_by_asdf
+    # install_java_version_by_asdf
+    # install_clojure_version_by_asdf
+    # install_ruby_version_by_asdf
     ;;
   Darwin)
     echo "Running MacOS setup"
