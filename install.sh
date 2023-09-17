@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -o pipefail
+
 GREEN_COLOR='\033[0;32m'
 CLEAR_COLOR='\033[0m'
 
@@ -25,6 +28,8 @@ REQUIREMENTS_DEBIAN_PACK=(
   zsh
   xclip
   tmux
+  unzip
+  fontconfig
 )
 
 REQUIREMENTS_MACOS_PACK=(
@@ -45,6 +50,17 @@ JAVA_VERSION_FOR_INSTALL='temurin-17.0.8+101'
 CLOJURE_VERSION_FOR_INSTALL='1.11.1.1413'
 NODEJS_VERSION_FOR_INSTALL='18.17.1'
 RUBY_VERSION_FOR_INSTALL='3.2.2'
+
+NERD_FONT_VERSION='v3.0.2'
+CUSTOM_FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/${NERD_FONT_VERSION}/Meslo.zip"
+CUSTOM_FONT_NAME='Meslo.zip'
+
+export ZSH="${APPLICATION_PATH}/oh-my-zsh"
+export ZSH_CUSTOM="${ZSH}/custom"
+
+create_syslink_for_bin() {
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/bin ${HOME}/.bin
+}
 
 install_nala() {
   output_message 'Install Nala package manager for debian/linux'
@@ -93,6 +109,36 @@ make_asdf_plugins_available() {
   command ${HOME}/.asdf/bin/asdf plugin add nodejs
 }
 
+create_links_for_zsh_files() {
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/zsh/zshrc ${HOME}/.zshrc
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/zsh/zshenv ${HOME}/.zshenv
+}
+
+install_zsh_theme() {
+  command git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+  command ln -nfs "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+}
+
+install_zsh_plugins() {
+  command git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+  command git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
+}
+
+install_ohmyzsh() {
+  command sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+}
+
+download_and_install_custom_font() {
+  if [ ! -d "${HOME}/.local/share/fonts" ]; then
+    echo "Font directory not found in $USER home. Creating directory..."
+    mkdir -p ${HOME}/.local/share/fonts
+  fi
+
+  command wget $CUSTOM_FONT_URL -O "${DOTFILES_DEFAULT_PATH}/fonts/${CUSTOM_FONT_NAME}"
+  command unzip "${DOTFILES_DEFAULT_PATH}/fonts/${CUSTOM_FONT_NAME}" -d ${HOME}/.local/share/fonts
+  command fc-cache -fv
+}
+
 output_message() {
   command echo '################################################' 
   command echo "${GREEN_COLOR}==> $1 ${CLEAR_COLOR}"
@@ -102,20 +148,36 @@ output_message() {
 case "$(uname -s)" in
   Linux)
     echo "Running Debian/Ubuntu setup"
-    # install_nala
-    # install_debian_requirements
-    # make_zsh_as_default
-    # download_and_install_neovim
-    # download_and_install_asdf
-    # make_asdf_plugins_available
+
+    create_syslink_for_bin
+    install_nala
+    install_debian_requirements
+
+    download_and_install_neovim
+    download_and_install_custom_font
+
+    make_zsh_as_default
+    install_ohmyzsh
+    install_zsh_plugins
+    install_zsh_theme
+    create_links_for_zsh_files
+
+    download_and_install_asdf
+    make_asdf_plugins_available
     ;;
   Darwin)
     echo "Running MacOS setup"
-    # install_homebrew
-    # install_macos_requirements
-    # make_zsh_as_default
-    # download_and_install_asdf
-    # make_asdf_plugins_available
+    create_syslink_for_bin
+    install_homebrew
+    install_macos_requirements
+    download_and_install_custom_font
+    make_zsh_as_default
+    install_ohmyzsh
+    install_zsh_plugins
+    install_zsh_theme
+    create_links_for_zsh_files
+    download_and_install_asdf
+    make_asdf_plugins_available
     ;;
   *)
     echo "Operational system not recognized, aborting setup"
