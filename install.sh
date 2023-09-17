@@ -139,6 +139,15 @@ download_and_install_custom_font() {
   command fc-cache -fv
 }
 
+install_tpm_for_tmux() {
+  command git clone https://github.com/tmux-plugins/tpm ${DOTFILES_DEFAULT_PATH}/tmux/plugins/tpm
+  command ${DOTFILES_DEFAULT_PATH}/tmux/plugins/tpm/bin/install_plugins
+}
+
+create_syslink_for_tmux_conf() {
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/tmux/tmux.conf ${HOME}/.tmux.conf
+}
+
 output_message() {
   command echo '################################################' 
   command echo "${GREEN_COLOR}==> $1 ${CLEAR_COLOR}"
@@ -162,6 +171,9 @@ case "$(uname -s)" in
     install_zsh_theme
     create_links_for_zsh_files
 
+    create_syslink_for_tmux_conf
+    install_tpm_for_tmux
+
     download_and_install_asdf
     make_asdf_plugins_available
     ;;
@@ -176,6 +188,7 @@ case "$(uname -s)" in
     install_zsh_plugins
     install_zsh_theme
     create_links_for_zsh_files
+    create_syslink_for_tmux_conf
     download_and_install_asdf
     make_asdf_plugins_available
     ;;
