@@ -169,12 +169,17 @@ create_syslink_for_tmux_conf() {
 }
 
 create_syslink_for_neovim_config() {
-  if [ ! -d "${HOME}/.config/nvim" ]; then
-    echo "Directory not found ~> .config/nvim | Creating directory..."
-    mkdir -p ${HOME}/.config/nvim
+  if [ ! -d "${HOME}/.config" ]; then
+    echo "Directory not found ~> ${HOME}/.config | Creating directory..."
+    mkdir -p ${HOME}/.config
   fi
 
-  command ln -nfs ${DOTFILES_DEFAULT_PATH}/nvim ${HOME}/.config/nvim
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/nvim ${HOME}/.config
+}
+
+create_syslink_for_git_config() {
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/git/gitconfig ${HOME}/.gitconfig
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/git/gitignore ${HOME}/.gitignore
 }
 
 output_message() {
@@ -208,6 +213,8 @@ case "$(uname -s)" in
     download_and_install_asdf
     make_asdf_plugins_available
 
+    create_syslink_for_git_config
+
     # install_node_version_by_asdf
     # install_java_version_by_asdf
     # install_clojure_version_by_asdf
@@ -236,6 +243,8 @@ case "$(uname -s)" in
 
     download_and_install_asdf
     make_asdf_plugins_available
+
+    create_syslink_for_git_config
 
     # install_node_version_by_asdf
     # install_java_version_by_asdf
