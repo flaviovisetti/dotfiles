@@ -8,6 +8,7 @@ return {
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
     "onsails/lspkind.nvim",
+    "PaterJason/cmp-conjure",
   },
   config = function()
     local cmp = require("cmp")
@@ -34,6 +35,7 @@ return {
       }),
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
+        { name = "conjure" },
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },

@@ -34,3 +34,5 @@ opt.incsearch = true
 opt.textwidth = 80
 opt.listchars = { tab = "»·", trail = "·", nbsp = "·" }
 opt.diffopt = "filler,closeoff,vertical"
+
+opt.guicursor = ""
