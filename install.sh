@@ -177,9 +177,10 @@ create_syslink_for_neovim_config() {
   command ln -nfs ${DOTFILES_DEFAULT_PATH}/nvim ${HOME}/.config
 }
 
-create_syslink_for_git_config() {
+create_syslink_for_git_alias_config() {
   command ln -nfs ${DOTFILES_DEFAULT_PATH}/git/gitconfig ${HOME}/.gitconfig
   command ln -nfs ${DOTFILES_DEFAULT_PATH}/git/gitignore ${HOME}/.gitignore
+  command ln -nfs ${DOTFILES_DEFAULT_PATH}/aliases ${HOME}/.aliases
 }
 
 output_message() {
@@ -213,7 +214,7 @@ case "$(uname -s)" in
     download_and_install_asdf
     make_asdf_plugins_available
 
-    create_syslink_for_git_config
+    create_syslink_for_git_alias_config
 
     # install_node_version_by_asdf
     # install_java_version_by_asdf
@@ -244,7 +245,7 @@ case "$(uname -s)" in
     download_and_install_asdf
     make_asdf_plugins_available
 
-    create_syslink_for_git_config
+    create_syslink_for_git_alias_config
 
     # install_node_version_by_asdf
     # install_java_version_by_asdf
