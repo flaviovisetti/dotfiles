@@ -30,6 +30,9 @@ REQUIREMENTS_DEBIAN_PACK=(
   tmux
   unzip
   fontconfig
+  libz-dev
+  libyaml-dev
+  libssl-dev
 )
 
 REQUIREMENTS_MACOS_PACK=(
@@ -239,7 +242,7 @@ case "$(uname -s)" in
     create_syslink_for_tmux_conf
     install_tpm_for_tmux
 
-    download_and_install_neovim
+    # download_and_install_neovim
     create_syslink_for_neovim_config
 
     download_and_install_asdf
