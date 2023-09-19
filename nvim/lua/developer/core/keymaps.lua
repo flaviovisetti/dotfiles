@@ -20,6 +20,17 @@ keymap.set("n", "<leader>tp", ":tabp<CR>", { desc = "Back to previous opened tab
 keymap.set("i", "<C-K>", "<%=  %><Esc>2hi", { silent = true, desc = "Snippet for ERB. Executes the ruby code with output" })
 keymap.set("i", "<C-J>", "<%  %><Esc>2hi", { silent = true, desc = "Snippet for ERB. Executes the ruby code without output" })
 
+keymap.set("n", "<leader>rs", ":call RunCurrentSpecFile()<CR>")
+keymap.set("n", "<leader>rn", ":call RunNearestSpec()<CR>")
+keymap.set("n", "<leader>rl", ":call RunLastSpec()<CR>")
+keymap.set("n", "<leader>ra", ":call RunAllSpecs()<CR>")
+
+keymap.set("n", "<leader>tt", ":VtrAttachToPane<CR>")
+keymap.set("n", "<leader>ru", "<cmd>VtrSendCommand rubocop<CR>")
+keymap.set("n", "<leader>rfu", function()
+	return ":VtrSendCommand rubocop " .. vim.fn.expand("%") .. "<CR>"
+end, { expr = true })
+
 keymap.set("n", "<C-h>", ":TmuxNavigateLeft<CR>", { silent = true })
 keymap.set("n", "<C-j>", ":TmuxNavigateDown<CR>", { silent = true })
 keymap.set("n", "<C-k>", ":TmuxNavigateUp<CR>", { silent = true })
