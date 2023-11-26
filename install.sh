@@ -38,6 +38,7 @@ REQUIREMENTS_DEBIAN_PACK=(
 REQUIREMENTS_MACOS_PACK=(
   coreutils
   curl
+  wget
   git
   neovim
   ripgrep
@@ -45,6 +46,7 @@ REQUIREMENTS_MACOS_PACK=(
   rlwrap
   tmux
   reattach-to-user-namespace
+  libyaml
 )
 
 REQUIREMENTS_MACOS_CASK_PACK=(iterm2)
@@ -162,6 +164,11 @@ download_and_install_custom_font() {
   command fc-cache -fv
 }
 
+download_and_install_custom_font_for_mac() {
+  command brew tap homebrew/cask-fonts
+  command brew install --cask font-jetbrains-mono-nerd-font
+}
+
 install_tpm_for_tmux() {
   command git clone https://github.com/tmux-plugins/tpm ${DOTFILES_DEFAULT_PATH}/tmux/plugins/tpm
   command ${DOTFILES_DEFAULT_PATH}/tmux/plugins/tpm/bin/install_plugins
@@ -231,7 +238,7 @@ case "$(uname -s)" in
     install_homebrew
     install_macos_requirements
 
-    download_and_install_custom_font
+    download_and_install_custom_font_for_mac
 
     make_zsh_as_default
     install_ohmyzsh
@@ -242,7 +249,6 @@ case "$(uname -s)" in
     create_syslink_for_tmux_conf
     install_tpm_for_tmux
 
-    # download_and_install_neovim
     create_syslink_for_neovim_config
 
     download_and_install_asdf
