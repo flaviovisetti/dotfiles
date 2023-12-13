@@ -8,7 +8,7 @@ return {
   config = function()
     local keymap = vim.keymap
 
-    keymap.set("n", "<localleader>crn", "<cmd>ConjureCljRunCurrentTest<CR>")
-    keymap.set("n", "<localleader>cra", "<cmd>ConjureCljRunAllTests<CR>")
+    keymap.set("n", "<localleader>rn", "<cmd>ConjureCljRunCurrentTest<CR>")
+    keymap.set("n", "<localleader>ra", "<cmd>ConjureCljRunAllTests<CR>")
   end,
 }
