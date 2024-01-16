@@ -26,6 +26,7 @@ return {
         "html",
         "lua_ls",
         "ruby_ls",
+        "rust_analyzer",
         "tsserver",
       },
       automatic_installation = true
