@@ -47,6 +47,7 @@ REQUIREMENTS_MACOS_PACK=(
   tmux
   reattach-to-user-namespace
   libyaml
+  zsh-async
 )
 
 REQUIREMENTS_MACOS_CASK_PACK=(iterm2)
