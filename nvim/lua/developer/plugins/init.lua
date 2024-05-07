@@ -6,6 +6,7 @@ return {
   "christoomey/vim-tmux-runner",
   "thoughtbot/vim-rspec",
   "tpope/vim-rails",
+  "gpanders/nvim-parinfer"
 }
 
 
