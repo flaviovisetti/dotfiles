@@ -25,9 +25,8 @@ return {
         "dockerls",
         "html",
         "lua_ls",
-        "ruby_ls",
-        "rust_analyzer",
-        "tsserver",
+        "ruby_lsp",
+        "ts_ls",
       },
       automatic_installation = true
     })
