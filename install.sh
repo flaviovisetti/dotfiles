@@ -119,7 +119,7 @@ install_tpm_for_tmux
 create_syslink_for_neovim_config
 create_syslink_for_git_alias_config
 make_asdf_plugins_available
-# install_node_version_by_asdf
-# install_java_version_by_asdf
-# install_clojure_version_by_asdf
-# install_ruby_version_by_asdf
+install_node_version_by_asdf
+install_java_version_by_asdf
+install_clojure_version_by_asdf
+install_ruby_version_by_asdf

@@ -8,8 +8,8 @@ CUSTOM_FONT_NAME='JetBrainsMono'
 CUSTOM_FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/${NERD_FONT_VERSION}/${CUSTOM_FONT_NAME}.zip"
 
 ASDF_LATEST_VERSION='v0.16.6'
+ASDF_FILE_NAME='asdf-linux64'
 ASDF_DOWNLOAD_URL="https://github.com/asdf-vm/asdf/releases/download/${ASDF_LATEST_VERSION}/asdf-${ASDF_LATEST_VERSION}-linux-amd64.tar.gz"
-ASDF_FILE_NAME=asdf-linux64
 
 REQUIREMENTS_DEBIAN_PACK=(
   build-essential
@@ -47,19 +47,20 @@ download_and_install_custom_font() {
     mkdir -p ${HOME}/.local/share/fonts
   fi
 
-  command wget $CUSTOM_FONT_URL -O "${DOTFILES_DEFAULT_PATH}/fonts/${CUSTOM_FONT_NAME}.zip"
-  command unzip "${DOTFILES_DEFAULT_PATH}/fonts/${CUSTOM_FONT_NAME}.zip" -d ${HOME}/.local/share/fonts
+  command wget $CUSTOM_FONT_URL -O "${HOME}/.dotfiles/fonts/${CUSTOM_FONT_NAME}.zip"
+  command unzip "${HOME}/.dotfiles/fonts/${CUSTOM_FONT_NAME}.zip" -d ${HOME}/.local/share/fonts
   command fc-cache -fv
 }
 
 download_and_install_asdf() {
-  if [ ! -d "${HOME}/.local/share/fonts" ]; then
+  if [ ! -d "${HOME}/.asdf" ]; then
     echo "ASDF directory not found in $USER home. Creating directory..."
     mkdir -p ${HOME}/.asdf
   fi
 
-  command curl -L ${ASDF_LATEST_VERSION} --output ${HOME}/${ASDF_FILE_NAME}.tar.gz
+  command curl -L ${ASDF_DOWNLOAD_URL} --output ${HOME}/${ASDF_FILE_NAME}.tar.gz
   command tar -xvzf ${HOME}/${ASDF_FILE_NAME}.tar.gz --directory ${HOME}/.asdf
+  command sudo ln -nfs ${HOME}/.asdf/asdf /usr/local/bin/asdf
 }
 
 install_nala
