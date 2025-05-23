@@ -34,22 +34,22 @@ make_asdf_plugins_available() {
 
 install_node_version_by_asdf() {
   command asdf install nodejs $NODEJS_VERSION_FOR_INSTALL
-  command asdf global nodejs $NODEJS_VERSION_FOR_INSTALL
+  command asdf set -u nodejs $NODEJS_VERSION_FOR_INSTALL
 }
 
 install_java_version_by_asdf() {
   command asdf install java $JAVA_VERSION_FOR_INSTALL
-  command asdf global java $JAVA_VERSION_FOR_INSTALL
+  command asdf set -u java $JAVA_VERSION_FOR_INSTALL
 }
 
 install_clojure_version_by_asdf() {
   command asdf install clojure $CLOJURE_VERSION_FOR_INSTALL
-  command asdf global clojure $CLOJURE_VERSION_FOR_INSTALL
+  command asdf set -u clojure $CLOJURE_VERSION_FOR_INSTALL
 }
 
 install_ruby_version_by_asdf() {
   command asdf install ruby $RUBY_VERSION_FOR_INSTALL
-  command asdf global ruby $RUBY_VERSION_FOR_INSTALL
+  command asdf set -u ruby $RUBY_VERSION_FOR_INSTALL
 }
 
 create_links_for_zsh_files() {

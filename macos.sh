@@ -16,9 +16,13 @@ REQUIREMENTS_MACOS_PACK=(
   reattach-to-user-namespace
   libyaml
   zsh-async
+  asdf
 )
 
-REQUIREMENTS_MACOS_CASK_PACK=(iterm2)
+REQUIREMENTS_MACOS_CASK_PACK=(
+  iterm2
+  font-jetbrains-mono-nerd-font
+)
 
 install_homebrew() {
   command echo 'Install Homebrew package manager for MacOS'
@@ -30,16 +34,5 @@ install_macos_requirements() {
   command brew install --cask ${REQUIREMENTS_MACOS_CASK_PACK[@]}
 }
 
-download_and_install_custom_font_for_mac() {
-  command brew tap homebrew/cask-fonts
-  command brew install --cask font-jetbrains-mono-nerd-font
-}
-
-download_and_install_asdf() {
-  command brew install asdf
-}
-
 install_homebrew
 install_macos_requirements
-download_and_install_custom_font_for_mac
-download_and_install_asdf
